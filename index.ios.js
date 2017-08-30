@@ -13,7 +13,7 @@ export default class todolistRedux extends Component {
       <View>
         <App />
       </View>
-    );
+    )
   }
 }
 
