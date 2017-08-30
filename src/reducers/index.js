@@ -16,6 +16,8 @@ const todos = (state = 0, action) => {
       const {idToggle, isToggle} = action.payload
       state[idToggle] = {...state[idToggle], isToggle: isToggle}
       return [...state]
+    case 'TODO_FETCH_SUCCESS':
+      return [...state, action.payload]
     default:
       return state
   }

@@ -21,10 +21,6 @@ class Todo extends Component {
     this.setState({ mode: event })
   }
 
-  componentWillReceiveProps(nextProps){
-    console.log(nextProps)
-  }
-
   listItem (){
     return this.props.todos.map((arr, index)=>{
       return (

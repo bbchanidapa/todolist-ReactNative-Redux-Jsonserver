@@ -3,7 +3,7 @@ import { Text, View, TextInput, Button } from 'react-native'
 import { createStore } from 'redux'
 import { connect } from 'react-redux'
 import Todo  from '../components/Todo'
-import { addItemAction } from '../actions/index'
+import { addItemAction, fetchDataAction } from '../actions/index'
   
 class AppContainer extends Component {
 	constructor(props) {
@@ -18,12 +18,16 @@ class AppContainer extends Component {
 		this.setState({mode: event})
 	}
 
+	componentDidMount() {
+		this.props.onFetchData()
+		console.log(this.props)
+	}
   render() {
     return (
       <View>
 				{ this.state.mode == 'add'?
 				<View>
-					<TextInput onChangeText={(e) => { this.setState({text: e}) }} style={{ margin: 10, borderWidth: 1, borderColor: '#000000'}} />
+					<TextInput onChangeText={(e) => { this.setState({text: e}) }} style={{ margin: 20, borderWidth: 1, borderColor: '#000000'}} />
 					<Button title={'+'}
 						onPress={()=> {
 							const text = this.state.text
@@ -41,11 +45,15 @@ class AppContainer extends Component {
 }
 
 mapStateToProps = (state) => {
+	console.log('state',state)
     return { todos: state.todos }
 }
 mapDispatchToProps = (dispatch, ownProps) => ({
 	onAddTodo: (data) => {
 		dispatch(addItemAction(data))
+	},
+	onFetchData: () => {
+		dispatch(fetchDataAction())
 	}
 })
 

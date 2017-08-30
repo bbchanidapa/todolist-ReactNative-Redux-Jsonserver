@@ -1,13 +1,35 @@
+import axios from 'axios'
+
 export const addItemAction = (text) => {
-	const data =  {
-		type: 'ADD',
-		payload: {
+	return (dispatch) => {
+		return axios.post('http://localhost:3000/todos', {
 			id: Date.now(),
-			text: text,
+			text,
 			isToggle: false
-		}
-	 }
-	return data
+		})
+				.then(response => {
+					console.log(response)
+						return dispatch({type: 'ADD', payload: response.data})
+				})
+				.catch((error) => {
+						console.log(error)
+				})
+	}
+}
+
+export const fetchDataAction = () => {
+	return (dispatch) => {
+		axios.get('http://localhost:3000/todos')
+				.then(response => {
+						dispatch({
+								type: 'TODO_FETCH_SUCCESS',
+								payload: response.data
+						})
+				})
+				.catch((error) => {
+						console.log(error)
+				})
+	}
 }
 
 export const delItemAction = (id) => {
@@ -32,7 +54,6 @@ export const editItemAction = (res) => {
 }
 
 export const toggleAction = (res) => {
-	console.log('action',res)
 	const data =  {
 		type: 'TOGGLE',
 		payload: {
